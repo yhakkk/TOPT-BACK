@@ -10,14 +10,17 @@ let secret;
 
 app.get('/generate-qr', (req, res) => {
   secret = speakeasy.generateSecret({ length: 20 });
-  console.log(secret);
+  console.log("secret: ", secret);
   const otpauthUrl = speakeasy.otpauthURL({
     secret: secret.base32,
     label: 'app:johndoe@gmail.com', 
     issuer: 'empresa', 
     encoding: 'base32'
   });
-
+  console.log("otpauthUrl: ", otpauthUrl)
+  
+  //TODO: Guardar secret en BD
+  
   qrcodeTerminal.generate(otpauthUrl, { small: true }, function (qrcode) {
     console.log('QR');
     console.log(qrcode);
